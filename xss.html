@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>XSS Attack Simulation</title>
+    <style>
+        /* Background Animation */
+        @keyframes bgAnimate {
+            0% {
+                background-position: 0% 50%;
+            }
+            50% {
+                background-position: 100% 50%;
+            }
+            100% {
+                background-position: 0% 50%;
+            }
+        }
+
+        /* Body Styling */
+        body {
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            font-family: 'Arial', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(45deg, #ff6f61, #33ccff, #ffcc33);
+            background-size: 400% 400%;
+            animation: bgAnimate 10s ease infinite;
+            color: white;
+        }
+
+        /* Container for content */
+        .container {
+            text-align: center;
+            background-color: rgba(0, 0, 0, 0.5);
+            padding: 30px;
+            border-radius: 15px;
+            width: 90%;
+            max-width: 600px;
+        }
+
+        /* Title */
+        h1 {
+            font-size: 2.5em;
+            margin-bottom: 20px;
+        }
+
+        /* Input fields */
+        .input-field {
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 5px;
+            width: 80%;
+            font-size: 1.2em;
+            border: 2px solid #fff;
+            background: transparent;
+            color: white;
+            transition: 0.3s ease;
+        }
+
+        .input-field:focus {
+            border-color: #33ccff;
+            outline: none;
+            background-color: #1a1a1a;
+        }
+
+        /* Button styles */
+        .btn {
+            padding: 15px 30px;
+            font-size: 1.5em;
+            font-weight: bold;
+            color: #fff;
+            background-color: #ff6f61;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: transform 0.3s ease, background-color 0.3s ease;
+        }
+
+        .btn:hover {
+            background-color: #ff3d3d;
+            transform: scale(1.1);
+        }
+
+        .btn:active {
+            background-color: #ff1a1a;
+            transform: scale(1.05);
+        }
+
+        /* Result box */
+        .result {
+            font-size: 1.2em;
+            margin-top: 20px;
+            background-color: rgba(0, 0, 0, 0.7);
+            padding: 20px;
+            border-radius: 10px;
+        }
+
+        /* Spinner */
+        .spinner {
+            border: 8px solid #f3f3f3;
+            border-top: 8px solid #33ccff;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 2s linear infinite;
+            margin: 20px auto;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* XSS Output styling */
+        #xss-output {
+            font-size: 1.5em;
+            margin-top: 20px;
+            padding: 15px;
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            color: #33ccff;
+            word-wrap: break-word;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>XSS Attack Simulation</h1>
+        
+        <p>Enter your payload below and click "Submit" to see the results of the XSS attack.</p>
+        
+        <!-- Input field for malicious script -->
+        <textarea id="xss-payload" class="input-field" placeholder="Enter your XSS payload here" rows="5"></textarea>
+        
+        <!-- Button to trigger the XSS attack -->
+        <button class="btn" onclick="performXSS()">Submit XSS Attack</button>
+        
+        <!-- Loading animation -->
+        <div id="loading" class="spinner" style="display: none;"></div>
+
+        <!-- Output area -->
+        <div id="xss-output" class="result" style="display: none;"></div>
+    </div>
+
+    <script>
+        // Function to perform XSS simulation
+        function performXSS() {
+            const payload = document.getElementById('xss-payload').value;
+            const resultBox = document.getElementById('xss-output');
+            const loading = document.getElementById('loading');
+            
+            if (!payload) {
+                alert("Please enter a payload.");
+                return;
+            }
+
+            // Show loading state
+            loading.style.display = "block";
+            resultBox.style.display = "none";
+
+            // Simulate a delay for the attack processing
+            setTimeout(() => {
+                // Hide loading and display the result
+                loading.style.display = "none";
+                resultBox.style.display = "block";
+
+                // Check if the XSS payload is valid
+                if (payload.includes("<script>") || payload.includes("alert(")) {
+                    resultBox.innerHTML = 'XSS Payload Detected: <br><strong>' + payload + '</strong>';
+                    // Dynamically add the payload to the page and execute it
+                    var script = document.createElement('script');
+                    script.innerHTML = payload;
+                    document.body.appendChild(script);
+                } else {
+                    resultBox.innerHTML = 'No XSS payload detected. Please try again.';
+                }
+            }, 1500); // Simulate delay
+        }
+    </script>
+
+</body>
+</html>

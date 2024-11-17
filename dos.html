@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DoS Attack Simulation</title>
+    <style>
+        /* Animated background */
+        @keyframes bgAnimate {
+            0% {
+                background-position: 0% 50%;
+            }
+            50% {
+                background-position: 100% 50%;
+            }
+            100% {
+                background-position: 0% 50%;
+            }
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            font-family: 'Arial', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(45deg, #ff6f61, #33ccff, #ffcc33);
+            background-size: 400% 400%;
+            animation: bgAnimate 10s ease infinite;
+            color: white;
+        }
+
+        .container {
+            text-align: center;
+            background-color: rgba(0, 0, 0, 0.6);
+            padding: 40px;
+            border-radius: 15px;
+            width: 90%;
+            max-width: 600px;
+        }
+
+        h1 {
+            font-size: 2.5em;
+            margin-bottom: 20px;
+        }
+
+        /* Input fields */
+        .input-field {
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 5px;
+            width: 80%;
+            font-size: 1.2em;
+            border: 2px solid #fff;
+            background: transparent;
+            color: white;
+            transition: 0.3s ease;
+        }
+
+        .input-field:focus {
+            border-color: #33ccff;
+            outline: none;
+            background-color: #1a1a1a;
+        }
+
+        /* Button styles */
+        .btn {
+            padding: 15px 30px;
+            font-size: 1.5em;
+            font-weight: bold;
+            color: #fff;
+            background-color: #ff6f61;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: transform 0.3s ease, background-color 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .btn:hover {
+            background-color: #ff3d3d;
+            transform: scale(1.1);
+            box-shadow: 0 0 20px rgba(255, 61, 61, 0.5);
+        }
+
+        .btn:active {
+            background-color: #ff1a1a;
+            transform: scale(1.05);
+            box-shadow: 0 0 10px rgba(255, 61, 61, 0.3);
+        }
+
+        /* Result box */
+        .result {
+            font-size: 1.2em;
+            margin-top: 20px;
+            background-color: rgba(0, 0, 0, 0.7);
+            padding: 20px;
+            border-radius: 10px;
+        }
+
+        /* Spinner */
+        .spinner {
+            border: 8px solid #f3f3f3;
+            border-top: 8px solid #33ccff;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 2s linear infinite;
+            margin: 20px auto;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Dos Simulation Output */
+        #dos-output {
+            font-size: 1.5em;
+            margin-top: 20px;
+            padding: 15px;
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            color: #33ccff;
+            word-wrap: break-word;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>DoS Attack Simulation</h1>
+        
+        <p>Simulate a Denial of Service (DoS) attack to visualize the effects of server overload.</p>
+        
+        <!-- Input for attack duration -->
+        <input id="dos-duration" class="input-field" type="number" placeholder="Enter Attack Duration in Seconds" min="1">
+        
+        <!-- Button to trigger DoS attack -->
+        <button class="btn" onclick="performDoS()">Start DoS Simulation</button>
+        
+        <!-- Loading spinner -->
+        <div id="loading" class="spinner" style="display: none;"></div>
+
+        <!-- Output area -->
+        <div id="dos-output" class="result" style="display: none;"></div>
+    </div>
+
+    <script>
+        // Function to simulate a DoS attack
+        function performDoS() {
+            const duration = document.getElementById('dos-duration').value;
+            const resultBox = document.getElementById('dos-output');
+            const loading = document.getElementById('loading');
+            
+            if (!duration || duration <= 0) {
+                alert("Please enter a valid attack duration.");
+                return;
+            }
+
+            // Show loading spinner
+            loading.style.display = "block";
+            resultBox.style.display = "none";
+
+            // Simulate a DoS attack (flooding the page with requests)
+            setTimeout(() => {
+                // Hide loading spinner and show attack result
+                loading.style.display = "none";
+                resultBox.style.display = "block";
+
+                // Simulate an overload message
+                resultBox.innerHTML = 'DoS Attack Simulation Running for ' + duration + ' seconds. <br><strong>Server is overwhelmed, requests are being dropped!</strong>';
+                
+                // Further simulate an overload with a timeout message
+                setTimeout(() => {
+                    resultBox.innerHTML += "<br><strong>Server Timeout! The system is unable to respond.</strong>";
+                }, duration * 1000);  // After the attack duration, show timeout
+                
+            }, 1000);  // Simulate a short delay before attack starts
+        }
+    </script>
+
+</body>
+</html>

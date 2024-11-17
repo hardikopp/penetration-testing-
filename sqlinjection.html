@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SQL Injection Attack Simulation</title>
+    <style>
+        /* Animated background */
+        @keyframes bgAnimate {
+            0% {
+                background-position: 0% 50%;
+            }
+            50% {
+                background-position: 100% 50%;
+            }
+            100% {
+                background-position: 0% 50%;
+            }
+        }
+
+        /* Body Styling */
+        body {
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            font-family: 'Arial', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(45deg, #ff6f61, #33ccff, #ffcc33);
+            background-size: 400% 400%;
+            animation: bgAnimate 10s ease infinite;
+            color: white;
+        }
+
+        /* Container for content */
+        .container {
+            text-align: center;
+            background-color: rgba(0, 0, 0, 0.6);
+            padding: 30px;
+            border-radius: 15px;
+            width: 90%;
+            max-width: 600px;
+        }
+
+        /* Title */
+        h1 {
+            font-size: 2.5em;
+            margin-bottom: 20px;
+        }
+
+        /* Input fields */
+        .input-field {
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 5px;
+            width: 80%;
+            font-size: 1.2em;
+            border: 2px solid #fff;
+            background: transparent;
+            color: white;
+            transition: 0.3s ease;
+        }
+
+        .input-field:focus {
+            border-color: #33ccff;
+            outline: none;
+            background-color: #1a1a1a;
+        }
+
+        /* Button styles */
+        .btn {
+            padding: 15px 30px;
+            font-size: 1.5em;
+            font-weight: bold;
+            color: #fff;
+            background-color: #ff6f61;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: transform 0.3s ease, background-color 0.3s ease;
+        }
+
+        .btn:hover {
+            background-color: #ff3d3d;
+            transform: scale(1.1);
+        }
+
+        .btn:active {
+            background-color: #ff1a1a;
+            transform: scale(1.05);
+        }
+
+        /* Result box */
+        .result {
+            font-size: 1.2em;
+            margin-top: 20px;
+            background-color: rgba(0, 0, 0, 0.7);
+            padding: 20px;
+            border-radius: 10px;
+        }
+
+        /* Spinner */
+        .spinner {
+            border: 8px solid #f3f3f3;
+            border-top: 8px solid #33ccff;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 2s linear infinite;
+            margin: 20px auto;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* SQL Injection Output styling */
+        #sql-output {
+            font-size: 1.5em;
+            margin-top: 20px;
+            padding: 15px;
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            color: #33ccff;
+            word-wrap: break-word;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>SQL Injection Attack Simulation</h1>
+        
+        <p>Enter your SQL injection payload below and click "Submit" to see the results of the attack.</p>
+        
+        <!-- Input field for SQL payload -->
+        <textarea id="sql-payload" class="input-field" placeholder="Enter your SQL injection payload here" rows="5"></textarea>
+        
+        <!-- Button to trigger SQL injection -->
+        <button class="btn" onclick="performSQLInjection()">Submit SQL Injection</button>
+        
+        <!-- Loading animation -->
+        <div id="loading" class="spinner" style="display: none;"></div>
+
+        <!-- Output area -->
+        <div id="sql-output" class="result" style="display: none;"></div>
+    </div>
+
+    <script>
+        // Function to perform SQL injection simulation
+        function performSQLInjection() {
+            const payload = document.getElementById('sql-payload').value;
+            const resultBox = document.getElementById('sql-output');
+            const loading = document.getElementById('loading');
+            
+            if (!payload) {
+                alert("Please enter a SQL payload.");
+                return;
+            }
+
+            // Show loading state
+            loading.style.display = "block";
+            resultBox.style.display = "none";
+
+            // Simulate a delay for the attack processing
+            setTimeout(() => {
+                // Hide loading and display the result
+                loading.style.display = "none";
+                resultBox.style.display = "block";
+
+                // Check if the SQL injection payload is valid
+                if (payload.includes("' OR '1'='1'") || payload.includes("SELECT") || payload.includes("--") || payload.includes("UNION")) {
+                    resultBox.innerHTML = 'SQL Injection Payload Detected: <br><strong>' + payload + '</strong>';
+                    // Simulate a SQL Injection result by displaying a fake database query result
+                    resultBox.innerHTML += "<br><br>Database query executed successfully! Data retrieved: <br><strong>Username: admin</strong><br><strong>Password: password123</strong>";
+                } else {
+                    resultBox.innerHTML = 'No SQL injection payload detected. Please try again.';
+                }
+            }, 1500); // Simulate delay
+        }
+    </script>
+
+</body>
+</html>

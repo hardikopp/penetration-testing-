@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Packet Sniffing Simulation</title>
+    <style>
+        /* Animated background */
+        @keyframes bgAnimate {
+            0% {
+                background-position: 0% 50%;
+            }
+            50% {
+                background-position: 100% 50%;
+            }
+            100% {
+                background-position: 0% 50%;
+            }
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            font-family: 'Arial', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(45deg, #ff6f61, #33ccff, #ffcc33);
+            background-size: 400% 400%;
+            animation: bgAnimate 10s ease infinite;
+            color: white;
+        }
+
+        .container {
+            text-align: center;
+            background-color: rgba(0, 0, 0, 0.6);
+            padding: 40px;
+            border-radius: 15px;
+            width: 90%;
+            max-width: 600px;
+        }
+
+        h1 {
+            font-size: 2.5em;
+            margin-bottom: 20px;
+        }
+
+        /* Button styles */
+        .btn {
+            padding: 15px 30px;
+            font-size: 1.5em;
+            font-weight: bold;
+            color: #fff;
+            background-color: #ff6f61;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: transform 0.3s ease, background-color 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .btn:hover {
+            background-color: #ff3d3d;
+            transform: scale(1.1);
+            box-shadow: 0 0 20px rgba(255, 61, 61, 0.5);
+        }
+
+        .btn:active {
+            background-color: #ff1a1a;
+            transform: scale(1.05);
+            box-shadow: 0 0 10px rgba(255, 61, 61, 0.3);
+        }
+
+        /* Result box */
+        .result {
+            font-size: 1.2em;
+            margin-top: 20px;
+            background-color: rgba(0, 0, 0, 0.7);
+            padding: 20px;
+            border-radius: 10px;
+        }
+
+        /* Packet display */
+        #packet-display {
+            margin-top: 30px;
+            padding: 20px;
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            font-size: 1em;
+            color: #33ccff;
+            max-height: 200px;
+            overflow-y: auto;
+        }
+
+        /* Spinner */
+        .spinner {
+            border: 8px solid #f3f3f3;
+            border-top: 8px solid #33ccff;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 2s linear infinite;
+            margin: 20px auto;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>Packet Sniffing Simulation</h1>
+        
+        <p>Simulate a packet sniffing attack to visualize the intercepted network packets.</p>
+        
+        <!-- Button to trigger sniffing simulation -->
+        <button class="btn" onclick="startSniffing()">Start Packet Sniffing Simulation</button>
+        
+        <!-- Loading spinner -->
+        <div id="loading" class="spinner" style="display: none;"></div>
+
+        <!-- Simulated packet display -->
+        <div id="packet-display" class="result" style="display: none;"></div>
+    </div>
+
+    <script>
+        // Function to simulate packet sniffing
+        function startSniffing() {
+            const packetDisplay = document.getElementById('packet-display');
+            const loading = document.getElementById('loading');
+            
+            // Show loading spinner
+            loading.style.display = "block";
+            packetDisplay.style.display = "none";
+
+            // Simulate sniffing attack (intercepting packets)
+            setTimeout(() => {
+                loading.style.display = "none";
+                packetDisplay.style.display = "block";
+
+                // Display intercepted packets in a simulated manner
+                packetDisplay.innerHTML = '<strong>Packet Sniffing Simulation</strong><br>';
+                
+                // Simulated packets
+                const packets = [
+                    'Packet 1: [Protocol: TCP, Source IP: 192.168.1.2, Destination IP: 192.168.1.1, Data: "Hello, server!"]',
+                    'Packet 2: [Protocol: UDP, Source IP: 192.168.1.3, Destination IP: 192.168.1.1, Data: "User login attempt"]',
+                    'Packet 3: [Protocol: TCP, Source IP: 192.168.1.4, Destination IP: 192.168.1.5, Data: "Sensitive file transfer"]',
+                    'Packet 4: [Protocol: HTTP, Source IP: 192.168.1.2, Destination IP: 192.168.1.5, Data: "GET /admin"]',
+                    'Packet 5: [Protocol: FTP, Source IP: 192.168.1.7, Destination IP: 192.168.1.6, Data: "Uploading file"]'
+                ];
+
+                // Display packets one by one with delay
+                packets.forEach((packet, index) => {
+                    setTimeout(() => {
+                        packetDisplay.innerHTML += `<br>${packet}`;
+                    }, 1000 * (index + 1));  // Delay packets display
+                });
+
+            }, 1000); // Simulate delay before starting sniffing
+        }
+    </script>
+
+</body>
+</html>

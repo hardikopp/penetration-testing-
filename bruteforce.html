@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Brute Force Attack Simulation</title>
+    <style>
+        /* Background Animation */
+        @keyframes bgAnimate {
+            0% {
+                background-position: 0% 50%;
+            }
+            50% {
+                background-position: 100% 50%;
+            }
+            100% {
+                background-position: 0% 50%;
+            }
+        }
+
+        /* Body Styling */
+        body {
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            font-family: 'Arial', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(45deg, #ff6f61, #ffcc33, #33ccff);
+            background-size: 400% 400%;
+            animation: bgAnimate 10s ease infinite;
+            color: white;
+        }
+
+        /* Container for content */
+        .container {
+            text-align: center;
+            background-color: rgba(0, 0, 0, 0.5);
+            padding: 30px;
+            border-radius: 15px;
+            width: 90%;
+            max-width: 600px;
+        }
+
+        /* Title */
+        h1 {
+            font-size: 2.5em;
+            margin-bottom: 20px;
+        }
+
+        /* Input fields */
+        .input-field {
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 5px;
+            width: 80%;
+            font-size: 1.2em;
+            border: 2px solid #fff;
+            background: transparent;
+            color: white;
+            transition: 0.3s ease;
+        }
+
+        .input-field:focus {
+            border-color: #33ccff;
+            outline: none;
+            background-color: #1a1a1a;
+        }
+
+        /* Button styles */
+        .btn {
+            padding: 15px 30px;
+            font-size: 1.5em;
+            font-weight: bold;
+            color: #fff;
+            background-color: #ff6f61;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: transform 0.3s ease, background-color 0.3s ease;
+        }
+
+        .btn:hover {
+            background-color: #ff3d3d;
+            transform: scale(1.1);
+        }
+
+        .btn:active {
+            background-color: #ff1a1a;
+            transform: scale(1.05);
+        }
+
+        /* Loading Animation */
+        .loading {
+            display: none;
+            font-size: 1.5em;
+            color: #33ccff;
+        }
+
+        /* Result box */
+        .result {
+            font-size: 1.2em;
+            margin-top: 20px;
+            background-color: rgba(0, 0, 0, 0.7);
+            padding: 20px;
+            border-radius: 10px;
+        }
+
+        /* Spinner */
+        .spinner {
+            border: 8px solid #f3f3f3;
+            border-top: 8px solid #33ccff;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 2s linear infinite;
+            margin: 20px auto;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>Brute Force Attack Simulation</h1>
+        
+        <p>Enter a username and password to simulate a brute force attack. The system will attempt common passwords.</p>
+        
+        <!-- Input fields for username and password -->
+        <input type="text" id="username" class="input-field" placeholder="Enter username" required>
+        <input type="password" id="password" class="input-field" placeholder="Enter password" required>
+
+        <!-- Button to simulate brute force attack -->
+        <button class="btn" onclick="simulateAttack()">Start Brute Force Attack</button>
+        
+        <!-- Loading animation -->
+        <div id="loading" class="loading">
+            <div class="spinner"></div>
+            <p>Attempting passwords...</p>
+        </div>
+
+        <!-- Result box -->
+        <div id="result" class="result" style="display: none;"></div>
+    </div>
+
+    <script>
+        // Simulating a brute force attack with a predefined list of common passwords
+        const commonPasswords = ["123456", "password", "12345678", "qwerty", "abc123", "password1", "admin", "letmein"];
+        
+        // Function to simulate the brute force attack
+        function simulateAttack() {
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+            const resultBox = document.getElementById('result');
+            const loading = document.getElementById('loading');
+            
+            if (!username || !password) {
+                alert("Please fill in both fields.");
+                return;
+            }
+
+            // Show loading state
+            loading.style.display = "block";
+            resultBox.style.display = "none";
+
+            // Simulate password checking
+            setTimeout(() => {
+                let passwordFound = false;
+
+                for (let i = 0; i < commonPasswords.length; i++) {
+                    if (commonPasswords[i] === password) {
+                        passwordFound = true;
+                        break;
+                    }
+                }
+
+                // Hide loading and display result
+                loading.style.display = "none";
+                resultBox.style.display = "block";
+
+                if (passwordFound) {
+                    resultBox.innerHTML = `Success! Password "${password}" was found for user ${username}.`;
+                } else {
+                    resultBox.innerHTML = `Failure. The password "${password}" is not correct for user ${username}.`;
+                }
+            }, 2000); // Simulate a delay for the brute force attempt
+        }
+    </script>
+
+</body>
+</html>

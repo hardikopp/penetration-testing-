@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Penetration Testing & Hacking Tools</title>
+    <style>
+        /* General Body Styles */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #1a1a1a;
+            color: white;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            text-align: center;
+        }
+
+        /* Container for buttons */
+        .button-container {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        /* Button Styles */
+        .btn {
+            padding: 20px;
+            font-size: 20px;
+            font-weight: bold;
+            border: none;
+            background-color: #333;
+            color: white;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: transform 0.3s ease, background-color 0.3s ease;
+        }
+
+        /* Hover Effects */
+        .btn:hover {
+            background-color: #00cc44;
+            transform: scale(1.1);
+        }
+
+        .btn:active {
+            background-color: #009933;
+            transform: scale(1.05);
+        }
+
+        /* Title Styling */
+        h1 {
+            font-size: 3em;
+            margin-bottom: 40px;
+        }
+
+        /* Smooth Animation */
+        @keyframes smoothFade {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Apply animation to buttons */
+        .btn {
+            animation: smoothFade 0.6s ease-in-out;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="content">
+        <h1>Penetration Testing & Hacking Tools</h1>
+        <div class="button-container">
+            <!-- Button Options for Various Attacks -->
+            <button class="btn" onclick="window.location.href='bruteforce.html'">Brute Force Attack</button>
+            <button class="btn" onclick="window.location.href='xss.html'">XSS Attack (Cross-site Scripting)</button>
+            <button class="btn" onclick="window.location.href='sqlinjection.html'">SQL Injection</button>
+            <button class="btn" onclick="window.location.href='dos.html'">Denial of Service (DoS)</button>
+            <button class="btn" onclick="window.location.href='sniffing.html'">Packet Sniffing</button>
+            <button class="btn" onclick="window.location.href='phishing.html'">Phishing Attack</button>
+            <button class="btn" onclick="window.location.href='maninthemiddle.html'">Man-in-the-Middle Attack</button>
+        </div>
+    </div>
+
+</body>
+</html>

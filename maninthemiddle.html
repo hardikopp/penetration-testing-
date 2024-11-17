@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Man-in-the-Middle Attack Simulation</title>
+    <style>
+        /* Animated background */
+        @keyframes gradientAnimate {
+            0% {
+                background-position: 0% 50%;
+            }
+            50% {
+                background-position: 100% 50%;
+            }
+            100% {
+                background-position: 0% 50%;
+            }
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            font-family: 'Arial', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(45deg, #8e44ad, #3498db, #f39c12);
+            background-size: 400% 400%;
+            animation: gradientAnimate 10s ease infinite;
+            color: white;
+        }
+
+        .container {
+            background-color: rgba(0, 0, 0, 0.7);
+            padding: 40px 60px;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+            width: 100%;
+            max-width: 450px;
+            text-align: center;
+            position: relative;
+            z-index: 10;
+        }
+
+        h1 {
+            font-size: 2.5em;
+            margin-bottom: 20px;
+            color: #fff;
+        }
+
+        p {
+            font-size: 1.1em;
+            color: #ddd;
+            margin-bottom: 30px;
+        }
+
+        .input-field {
+            padding: 15px;
+            margin: 12px 0;
+            border-radius: 6px;
+            border: 1px solid #ccc;
+            width: 100%;
+            font-size: 1em;
+            background-color: #f9f9f9;
+            transition: 0.3s ease-in-out;
+        }
+
+        .input-field:focus {
+            outline: none;
+            border-color: #3b99fc;
+            background-color: #e9f2fc;
+        }
+
+        .btn {
+            padding: 15px 30px;
+            font-size: 1.2em;
+            font-weight: bold;
+            color: white;
+            background-color: #3b99fc;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+        }
+
+        .btn:hover {
+            background-color: #337bb5;
+            transform: scale(1.05);
+        }
+
+        .btn:active {
+            background-color: #2c5a8d;
+            transform: scale(1.02);
+        }
+
+        .result {
+            font-size: 1.2em;
+            margin-top: 30px;
+            padding: 20px;
+            background-color: #f0f8ff;
+            border: 1px solid #d1e8f9;
+            border-radius: 6px;
+            color: #3b99fc;
+            display: none;
+        }
+
+        .spinner {
+            border: 6px solid #f3f3f3;
+            border-top: 6px solid #3b99fc;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1.5s linear infinite;
+            margin: 20px auto;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>Man-in-the-Middle Attack Simulation</h1>
+        <p>Enter your credentials below to simulate a MITM attack.</p>
+        
+        <!-- Username and Password Form -->
+        <input id="username" class="input-field" type="text" placeholder="Enter Username">
+        <input id="password" class="input-field" type="password" placeholder="Enter Password">
+        
+        <!-- Submit Button -->
+        <button class="btn" onclick="submitForm()">Submit</button>
+
+        <!-- Loading Spinner -->
+        <div id="loading" class="spinner" style="display: none;"></div>
+
+        <!-- Result Message -->
+        <div id="form-message" class="result"></div>
+    </div>
+
+    <script>
+        // Function to simulate MITM attack process
+        function submitForm() {
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+            const resultMessage = document.getElementById('form-message');
+            const loading = document.getElementById('loading');
+
+            // Show loading spinner
+            loading.style.display = "block";
+            resultMessage.style.display = "none";
+
+            // Simulate delay to mimic MITM attack interception
+            setTimeout(() => {
+                // Hide the loading spinner
+                loading.style.display = "none";
+
+                // Display the captured data in the result message
+                resultMessage.style.display = "block";
+                resultMessage.innerHTML = `<strong>MITM Attack Simulation:</strong><br><br>Captured Username: <span style="color: #3b99fc;">${username}</span><br>Captured Password: <span style="color: #3b99fc;">${password}</span><br><br><strong>Data intercepted!</strong>`;
+
+                // Clear the inputs after submission
+                document.getElementById('username').value = "";
+                document.getElementById('password').value = "";
+            }, 1500); // Simulate delay
+        }
+    </script>
+
+</body>
+</html>
